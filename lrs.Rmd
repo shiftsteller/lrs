@@ -64,5 +64,5 @@ textChange <- paste0("Change detected. ", statusText, " Check https://formrtestl
 
 if (signals$change) {
   response <- RCurl::getURL(paste0("https://api.telegram.org/bot", apiToken, "/sendMessage?", "chat_id=", chat_id, "&text=", textChange))
-
+}
 #print(response)
