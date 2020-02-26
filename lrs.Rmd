@@ -50,7 +50,7 @@ library("jsonlite")
   print(Sys.time())
   cat("\n\n")
 
-  statusText <- paste0("The S&P 500 is ", signals$status, " the 195 day average. ")
+  statusText <- paste0("The S and P 500 is ", signals$status, " the 195 day average. ")
   cat(statusText)
   cat("\n\n")
   cat("Details: \n")
