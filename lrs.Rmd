@@ -57,3 +57,5 @@ library("jsonlite")
 
   cat("Details: \n")
   print(signals)
+  
+  
