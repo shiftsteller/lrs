@@ -60,7 +60,7 @@ library("jsonlite")
 apiToken <- "1067616532:AAHZrjQM1zDXwhKxHCFoGEKeNrS-PpHcWCs"
 
 chat_id <- "@LeveragedRotationStrategy"
-textChange <- paste0("Change detected. ", statusText, " Check https://formrtestlrs.formr.org/."
+textChange <- paste0("Change detected. ", statusText, " Check https://formrtestlrs.formr.org/.")
 
 if (signals$change) {
   response <- RCurl::getURL(paste0("https://api.telegram.org/bot", apiToken, "/sendMessage?", "chat_id=", chat_id, "&text=", textChange))
