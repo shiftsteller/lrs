@@ -50,7 +50,7 @@ library("jsonlite")
   print(Sys.time())
   cat("\n\n")
 
-  statusText <- paste0("The S and P 500 is ", signals$status, " the 195 day average. Price: ", signals$price, "195 day average: ", signals$SMA, ".")
+  statusText <- paste0("The S and P 500 is ", signals$status, " the 195 day average. Price: ", round(signals$price), "195 day average: ", round(signals$SMA), ".")
   cat(statusText)
   cat("\n\n")
   cat("Details: \n")
@@ -60,7 +60,7 @@ library("jsonlite")
 apiToken <- "1067616532:AAHZrjQM1zDXwhKxHCFoGEKeNrS-PpHcWCs"
 
 chat_id <- "@LeveragedRotationStrategy"
-textChange <- paste0(statusText, " Check https://formrtestlrs.formr.org/.")
+textChange <- paste0(statusText)
 
 if (T) {
   response <- RCurl::getURL(paste0("https://api.telegram.org/bot", apiToken, "/sendMessage?", "chat_id=", chat_id, "&text=", textChange))
