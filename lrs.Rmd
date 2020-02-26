@@ -71,3 +71,4 @@ if (signals$change) {
   response <- RCurl::getURL(paste0("https://api.telegram.org/bot", apiToken, "/sendMessage?", "chat_id=", chat_id, "&text=", textNoChange))
 }
 print(response)
+print("End.")
