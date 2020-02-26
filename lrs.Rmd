@@ -66,7 +66,8 @@ textChange <- "The S&P LRS Status has changed! Check https://formrtestlrs.formr.
 textNoChange <- "No change."
 
 if (signals$change) {
-  RCurl::getURL(paste0("https://api.telegram.org/bot", apiToken, "/sendMessage?", "chat_id=", chat_id, "&text=", textChange))
+  response <- RCurl::getURL(paste0("https://api.telegram.org/bot", apiToken, "/sendMessage?", "chat_id=", chat_id, "&text=", textChange))
 } else {
-  RCurl::getURL(paste0("https://api.telegram.org/bot", apiToken, "/sendMessage?", "chat_id=", chat_id, "&text=", textNoChange))
+  response <- RCurl::getURL(paste0("https://api.telegram.org/bot", apiToken, "/sendMessage?", "chat_id=", chat_id, "&text=", textNoChange))
 }
+print(response)
