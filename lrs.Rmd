@@ -1,0 +1,59 @@
+
+library("jsonlite")
+
+  getSignals <- function () {
+
+    JSONaverage <- fromJSON("https://www.alphavantage.co/query?function=SMA&symbol=^SPX&interval=daily&time_period=195&series_type=close&outputsize=compact&apikey=SFOGKBYKET4DG7CV")
+    SMA_days <- names(JSONaverage$`Technical Analysis: SMA`)
+
+
+    JSONcurrent <- fromJSON("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=^SPX&outputsize=compact&apikey=SFOGKBYKET4DG7CV")
+    current_days <- names(JSONcurrent$`Time Series (Daily)`)
+
+    lastDay <- as.character(max(as.Date(intersect(SMA_days[1:10], current_days[1:10]))))
+    lastYesterday <- as.character(max(as.Date(intersect(SMA_days[2:10], current_days[2:10]))))
+
+    today <-  getTheNumbers(lastDay, JSONaverage, JSONcurrent)
+    yesterday <- getTheNumbers(lastYesterday, JSONaverage, JSONcurrent)
+
+
+    change <- today$status != yesterday$status
+
+    return(list("change" = change, "status" = today$status, "lastDay" = lastDay, "price" =today$price,
+                "SMA" = today$SMA, "SMABandHigh" = today$SMABandHigh, SMABandlow = today$SMABandlow))
+  }
+
+
+  getTheNumbers <- function(day, JSONaverage, JSONcurrent) {
+    SMA <- as.numeric(JSONaverage$`Technical Analysis: SMA`[[day]]$`SMA`)
+    price <- as.numeric(JSONcurrent$`Time Series (Daily)`[[day]]$`4. close`)
+
+    band_low <- 1 - 0.011
+    band_high <- 1 + 0.01
+
+    if (price > SMA * band_high) {
+      status <- "above"
+    } else if (price < SMA * band_low) {
+      status <- "under"
+    } else {
+      status <- "close to"
+    }
+
+    return(list("status" = status, "lastDay" = day, "price" = price, "SMA" = SMA,
+                "SMABandHigh" = SMA * band_high, SMABandlow = SMA * band_low))
+  }
+
+
+  signals <- getSignals()
+
+  cat("Time: ")
+  print(Sys.time())
+  cat("\n\n")
+
+  cat("The S&P 500 is ")
+  cat(signals$status)
+  cat(" the 195 day average. \n\n")
+
+
+  cat("Details: \n")
+  print(signals)
